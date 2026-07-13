@@ -1,0 +1,28 @@
+# Teleop Twist Joy Configuration
+# Fill in your actual controller axis/button mappings below.
+#
+# Example parameters for PS4/PS5 controller:
+#   joy_topic: /joy
+#   cmd_vel_topic: /cmd_vel
+#   axis_linear.x: 1        # Left stick vertical
+#   axis_angular.yaw: 0     # Left stick horizontal
+#   scale_linear.x: 0.5
+#   scale_angular.yaw: 1.0
+#   enable_button: 4        # L1
+#   require_enable_button: true
+---
+
+# -- Placeholder -- replace with your actual teleop configuration
+teleop_twist_joy_node:
+  ros__parameters:
+    require_enable_button: false
+    axis_linear:
+      x: 1
+    axis_angular:
+      yaw: 0
+    scale_linear:
+      x: 0.5
+    scale_angular:
+      yaw: 1.0
+    enable_button: -1
+    enable_turbo_button:  -1

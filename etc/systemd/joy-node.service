@@ -1,0 +1,19 @@
+[Unit]
+Description=Rover Joystick Node (PS4/PS5 Controller)
+After=bluetooth.service
+Wants=bluetooth.service
+
+[Service]
+Type=simple
+User=rover
+Group=rover
+WorkingDirectory=/home/rover/ros2_ws
+Environment=ROS_DISTRO=lyrical
+Environment=RMW_IMPLEMENTATION=rmw_fastrtps_cpp
+Environment=ROS_DOMAIN_ID=0
+ExecStart=/bin/bash -lc 'source /opt/ros/lyrical/setup.bash && source /home/rover/ros2_ws/install/setup.bash && exec ros2 run joy joy_node'
+Restart=always
+RestartSec=3
+
+[Install]
+WantedBy=multi-user.target

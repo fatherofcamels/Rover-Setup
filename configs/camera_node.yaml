@@ -1,0 +1,43 @@
+# Camera Node Configuration (libcamera)
+#
+# libcamera identifies cameras by ID rather than /dev/video* paths.
+# Use `libcamera-hello --list-cameras` on the Pi to find available cameras.
+#
+# Example parameters:
+#   camera_id: 0
+#   width: 640
+#   height: 480
+#   framerate: 30
+#   topic_name: /camera/image_raw
+#   frame_id: camera_optical_frame
+---
+
+# -- Placeholder -- replace with your actual camera configuration
+camera_node:
+  ros__parameters:
+    camera_id: 0
+    width: 800
+    height: 800
+    framerate: 30
+    topic_name: "/camera/image_raw"
+    frame_id: "camera_optical_frame"
+
+    # Calibration (from camera calibration)
+    camera_name: "pi_cam"
+    camera_matrix:
+      rows: 3
+      cols: 3
+      data: [2379.692159, 0, 810.664016, 0, 2364.724193, 565.047935, 0, 0, 1]
+    distortion_model: plumb_bob
+    distortion_coefficients:
+      rows: 1
+      cols: 5
+      data: [-0.125793, 0.149249, -0.000565, -0.000972, 0]
+    rectification_matrix:
+      rows: 3
+      cols: 3
+      data: [1, 0, 0, 0, 1, 0, 0, 0, 1]
+    projection_matrix:
+      rows: 3
+      cols: 4
+      data: [2348.257291, 0, 809.568039, 0, 0, 2344.569053, 563.818346, 0, 0, 0, 1, 0]

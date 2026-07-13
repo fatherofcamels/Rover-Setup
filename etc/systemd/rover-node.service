@@ -1,0 +1,19 @@
+[Unit]
+Description=Rover ROS2 Host Node
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=rover
+Group=rover
+WorkingDirectory=/home/rover/ros2_ws
+Environment=ROS_DISTRO=lyrical
+Environment=RMW_IMPLEMENTATION=rmw_fastrtps_cpp
+Environment=ROS_DOMAIN_ID=0
+ExecStart=/bin/bash -lc 'source /opt/ros/lyrical/setup.bash && source /home/rover/ros2_ws/install/setup.bash && exec ros2 run rover_node rover_node'
+Restart=always
+RestartSec=2
+
+[Install]
+WantedBy=multi-user.target
