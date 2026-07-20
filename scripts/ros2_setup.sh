@@ -18,9 +18,14 @@ if ! command -v add-apt-repository &> /dev/null; then
     apt update && apt install -y software-properties-common
 fi
 
-for suite in noble noble-updates noble-backports; do
-    add-apt-repository -n -y "deb ${REPO_URL} ${suite} ${COMPONENTS//,/ }"
-done
+if ! grep -q "ports.ubuntu.com" /etc/apt/sources.list.d/ubuntu.sources 2>/dev/null \
+   && ! grep -q "ports.ubuntu.com" /etc/apt/sources.list 2>/dev/null; then
+    for suite in noble noble-updates noble-backports; do
+        add-apt-repository -n -y "deb ${REPO_URL} ${suite} ${COMPONENTS//,/ }"
+    done
+else
+    echo "Ubuntu ports sources already configured, skipping."
+fi
 
 apt update
 
@@ -37,7 +42,11 @@ echo "Updated locale:"
 locale
 
 # ---- ROS2 apt source ----
-add-apt-repository universe -y
+# universe is typically already enabled on Ubuntu Noble; only add if missing
+if ! grep -q "universe" /etc/apt/sources.list.d/ubuntu.sources 2>/dev/null \
+   && ! grep -q "universe" /etc/apt/sources.list 2>/dev/null; then
+    add-apt-repository universe -y
+fi
 apt update
 
 ROS_APT_SOURCE_VERSION=$(curl -s https://api.github.com/repos/ros-infrastructure/ros-apt-source/releases/latest | grep -F "tag_name" | awk -F'"' '{print $4}')
@@ -55,10 +64,12 @@ echo "ROS2 installation completed successfully."
 
 # ---- rosdep ----
 echo "Updating rosdep..."
+# rosdep init writes to /etc/ros/ — needs root
 if ! [ -f "/etc/ros/rosdep/sources.list.d/20-default.list" ]; then
   rosdep init
 fi
-rosdep update
+# Run update as rover so the cache (~rover/.ros/rosdep) is owned by rover
+sudo -u rover bash -c "source /opt/ros/lyrical/setup.bash && rosdep update"
 
 # ---- Setup rover user's environment ----
 ROVER_HOME=$(eval echo ~rover)

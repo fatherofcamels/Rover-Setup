@@ -17,7 +17,7 @@ apt install -y build-essential linux-headers-$(uname -r) dkms git \
     libudev-dev libyaml-dev libboost-dev libgnutls28-dev libssl-dev \
     libevent-dev libexif-dev libjpeg-dev \
     libgstreamer1.0-dev libgstreamer-plugins-base1.0-dev \
-    gstreamer1.0-tools
+    gstreamer1.0-tools pybind11-dev python3-ply
 
 # Remove the system libcamera-dev to avoid conflicts with our custom build
 apt remove -y libcamera-dev libcamera-tools libcamera-ipa 2>/dev/null || true
