@@ -62,7 +62,7 @@ export LD_LIBRARY_PATH="$LIBCAMERA_PREFIX/lib:$LIBCAMERA_PREFIX/lib/aarch64-linu
 
 if [[ ! -d "$CAMERA_WS/src/camera_ros/.git" ]]; then
     echo "Cloning camera_ros..."
-    sudo -u rover git clone https://github.com/ros-drivers/camera_ros.git \
+    sudo -u rover git clone https://github.com/christianrauch/camera_ros.git \
         "$CAMERA_WS/src/camera_ros"
 fi
 
