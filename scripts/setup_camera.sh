@@ -67,6 +67,7 @@ if [[ ! -d "$CAMERA_WS/src/camera_ros/.git" ]]; then
 fi
 
 echo "Installing ROS dependencies for camera_ros..."
+apt install -y ros-lyrical-camera-info-manager
 sudo -u rover bash -c "source /opt/ros/lyrical/setup.bash && cd '$CAMERA_WS' && \
     PKG_CONFIG_PATH='$PKG_CONFIG_PATH' LD_LIBRARY_PATH='$LD_LIBRARY_PATH' \
     rosdep install --from-paths src --ignore-src -r -y" 2>/dev/null || true
